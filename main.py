@@ -80,5 +80,5 @@ with gr.Blocks() as demo:
 if __name__ == "__main__":
     demo.queue().launch(
        debug = True,
-    #    server_name="0.0.0.0", server_port=8000
+       server_name="0.0.0.0", server_port=8000
     )
