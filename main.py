@@ -17,32 +17,32 @@ import json
 import pickle
 
 #initlizing
-class FlanLLM(LLM):
-    model_name = "google/flan-t5-small"
-    pipeline = pipeline("text2text-generation", model=model_name)
+# class FlanLLM(LLM):
+#     model_name = "google/flan-t5-small"
+#     pipeline = pipeline("text2text-generation", model=model_name)
 
-    def _call(self, prompt, stop=None):
-        return self.pipeline(prompt, max_length=9999)[0]["generated_text"]
+#     def _call(self, prompt, stop=None):
+#         return self.pipeline(prompt, max_length=9999)[0]["generated_text"]
  
-    def _identifying_params(self):
-        return {"name_of_model": self.model_name}
+#     def _identifying_params(self):
+#         return {"name_of_model": self.model_name}
 
-    def _llm_type(self):
-        return "custom"
+#     def _llm_type(self):
+#         return "custom"
 
-llm_predictor = LLMPredictor(llm=FlanLLM())
-hfemb = HuggingFaceEmbeddings()
-embed_model = LangchainEmbedding(hfemb)
+# llm_predictor = LLMPredictor(llm=FlanLLM())
+# hfemb = HuggingFaceEmbeddings()
+# embed_model = LangchainEmbedding(hfemb)
 
 #Define functions
-def build_the_bot(input_text):
-  text_list = [input_text]
-  documents = [Document(t) for t in text_list]
-  # print(documents)
-  global index
-  index = GPTSimpleVectorIndex(documents, embed_model=embed_model, llm_predictor=llm_predictor)
-  index.save_to_disk("index.json")
-  return('Index saved successfull!!!')
+# def build_the_bot(input_text):
+#   text_list = [input_text]
+#   documents = [Document(t) for t in text_list]
+#   # print(documents)
+#   global index
+#   index = GPTSimpleVectorIndex(documents, embed_model=embed_model, llm_predictor=llm_predictor)
+#   index.save_to_disk("index.json")
+#   return('Index saved successfull!!!')
 
 def chat(chat_history, user_input):
   # global history
@@ -58,13 +58,13 @@ def chat(chat_history, user_input):
 def read_text_file(file):
     with open(file.name, "r") as f:
         text = f.read()
-        build_the_bot(text)
+        # build_the_bot(text)
     return text
 
 def read_image_file(file):
     print(file.name)
     text = pytesseract.image_to_string(Image.open(file.name))
-    build_the_bot(text)
+    # build_the_bot(text)
     return text
 
 def read_pdf(file):
@@ -72,13 +72,14 @@ def read_pdf(file):
   text = ""
   for page in doc:
     text+=page.get_text()
-  build_the_bot(text)
+  # build_the_bot(text)
   return text
 
 # demo = gr.Interface(fn=greet, inputs="text", outputs="text")
 def find_file_type(input,file):
     if input:
-      return build_the_bot(input)
+      # return build_the_bot(input)
+      return
     
     if file:
         filename, file_extension = os.path.splitext(file.name)
